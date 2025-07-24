@@ -52,6 +52,10 @@ public class Card {
         return suit;
     }
 
+    public int getSymbolInt() {
+        return symbolInt;
+    }
+
     @Override
     public String toString() {
         return symbolStr + " of " + suit;

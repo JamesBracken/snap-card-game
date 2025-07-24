@@ -16,5 +16,7 @@ public class Main {
         game.displayDeck();
         game.sortDeckIntoSuits();
         game.displayDeck();
+        game.sortDeckInNumberOrder();
+        game.displayDeck();
     }
 }

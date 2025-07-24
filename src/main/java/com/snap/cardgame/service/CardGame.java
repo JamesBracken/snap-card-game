@@ -50,6 +50,9 @@ public class CardGame {
         deckOfCards.sort((a, b) -> b.getSuit() - a.getSuit());
     }
 
+    public void sortDeckInNumberOrder() {
+        deckOfCards.sort((a, b) -> a.getSymbolInt() - b.getSymbolInt());
+    }
 }
 
 
