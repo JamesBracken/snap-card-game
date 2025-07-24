@@ -14,5 +14,7 @@ public class Main {
         game.dealCard();
         game.dealCard();
         game.displayDeck();
+        game.sortDeckIntoSuits();
+        game.displayDeck();
     }
 }

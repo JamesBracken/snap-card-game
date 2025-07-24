@@ -24,6 +24,7 @@ public class Card {
         Suit(char suit) {
             this.value = suit;
         }
+
     }
 
     public enum Symbol {
@@ -45,6 +46,10 @@ public class Card {
 //      This takes the enum given name and assigns it as the string
         this.symbolStr = symbol.name();
         this.suit = suit.value;
+    }
+
+    public char getSuit() {
+        return suit;
     }
 
     @Override

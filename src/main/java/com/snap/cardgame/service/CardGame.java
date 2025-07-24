@@ -46,6 +46,10 @@ public class CardGame {
         return removedCard;
     }
 
+    public void sortDeckIntoSuits() {
+        deckOfCards.sort((a, b) -> b.getSuit() - a.getSuit());
+    }
+
 }
 
 
