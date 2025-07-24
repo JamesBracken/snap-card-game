@@ -10,10 +10,10 @@ package org.example;
 //- Each symbol is created as a part of an Enum FINISHED
 //- Each symbol has a string and int property of itself FINISHED
 //- Create a card constructor which will initialise the fields of suit and symbol FINISHED
-//- Create an array to push all cards to upon creation
-//- Create a for loop which will create all cards using both symbol and suit enums
-//Has a toString method that describes the class
-//- Create a toString method that will display each card class???
+//- Create an array to push all cards to upon creation FINISHED
+//- Create a for loop which will create all cards using both symbol and suit enums FINISHED
+//Has a toString method that describes the class FINISHED
+//- Create a toString method that will display each card class FINISHED
 
 public class Card {
 
