@@ -1,4 +1,4 @@
-package org.example;
+package com.snap.cardgame.model;
 
 //Has a String suit. Use the unicode characters of heart, club, diamond and spade.
 //- +2660 (Spade)
@@ -17,7 +17,7 @@ package org.example;
 
 public class Card {
 
-    enum Suit {
+    public enum Suit {
         SPADE('\u2660'), CLUB('\u2663'), HEART('\u2665'), DIAMOND('\u2666');
 
         private final char value;
@@ -26,17 +26,13 @@ public class Card {
         }
     }
 
-    enum Symbol {
+    public enum Symbol {
         TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8),
         NINE(9), JACK(10), Q(12), K(13), A(14);
         private final int value;
 
         Symbol(int value) {
             this.value = value;
-        }
-
-        public int getValue() {
-            return value;
         }
     }
 
@@ -55,6 +51,4 @@ public class Card {
     public String toString() {
         return symbolStr + " of " + suit;
     }
-
-
 }

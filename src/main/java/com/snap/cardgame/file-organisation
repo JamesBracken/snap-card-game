@@ -1,0 +1,17 @@
+This is a quick description of how to organise each file within a java project from top
+to bottom
+
+CLASSES
+
+-imports
+-Docstring
+-Class declaration
+-Constants ( Public first then Private )
+-Static fields
+-Instance fields
+-Static initialization
+-Constructors
+-Public methods
+-Private / Protected helper methods
+-Override methods
+-Inner classes or enums

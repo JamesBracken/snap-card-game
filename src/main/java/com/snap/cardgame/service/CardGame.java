@@ -1,4 +1,4 @@
-package org.example;
+package com.snap.cardgame.service;
 
 
 //Contains an ArrayList<Card> for the deckOfCards that contains all 52 cards. FINISHED
@@ -7,9 +7,11 @@ package org.example;
 //- Create a resetDeck method to populate the deckOfCards with 52 cards FINISHED
 //- The method should clear the deckOfCards prior to population to create a clean game state OR FINISHED
 //you can create a new round function which will do this and a separate initialiseDeck function FINISHED
-//Has a name which is also defined in the constructor.
-//- a name for what????
-//Has a getDeck method that lists out the cards in the deck.
+//Has a name which is also defined in the constructor.------------------------???
+//- a name for what???? -----------------------------------------------???
+//Has a getDeck method that lists out the cards in the deck. FINISHED
+
+import com.snap.cardgame.model.Card;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,12 @@ public class CardGame {
                 Card card = new Card(suit, symbol);
                 deckOfCards.add(card);
             }
+        }
+    }
+
+    public void displayDeck() {
+        for (Card card : deckOfCards) {
+            System.out.println(card);
         }
     }
 }
