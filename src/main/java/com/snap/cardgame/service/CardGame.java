@@ -16,7 +16,8 @@ import com.snap.cardgame.model.Card;
 import java.util.ArrayList;
 
 public class CardGame {
-
+    //    No game functionality reason to keep a log of all
+    Card previousCard;
     ArrayList<Card> deckOfCards = new ArrayList<>();
 
     public void resetDeck() {
@@ -34,6 +35,17 @@ public class CardGame {
             System.out.println(card);
         }
     }
+
+    public Card dealCard() {
+        Card removedCard = deckOfCards.removeFirst();
+        if (previousCard != null) {
+            System.out.println("previousCard: " + previousCard);
+        }
+        System.out.println("Your card: " + removedCard + "\n");
+        previousCard = removedCard; // May have to move this depending on implementation
+        return removedCard;
+    }
+
 }
 
 

@@ -11,5 +11,8 @@ public class Main {
         CardGame game = new CardGame();
         game.resetDeck();
         game.displayDeck();
+        game.dealCard();
+        game.dealCard();
+        game.displayDeck();
     }
 }
