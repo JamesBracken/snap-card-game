@@ -10,13 +10,7 @@ public class Main {
     public static void main(String[] args) {
         CardGame game = new CardGame();
         game.resetDeck();
-        game.displayDeck();
-        game.dealCard();
-        game.dealCard();
-        game.displayDeck();
-        game.sortDeckIntoSuits();
-        game.displayDeck();
-        game.sortDeckInNumberOrder();
-        game.displayDeck();
+        game.shuffleDeck();
+        game.shuffleDeck();
     }
 }

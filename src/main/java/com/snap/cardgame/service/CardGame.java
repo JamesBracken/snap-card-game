@@ -53,6 +53,18 @@ public class CardGame {
     public void sortDeckInNumberOrder() {
         deckOfCards.sort((a, b) -> a.getSymbolInt() - b.getSymbolInt());
     }
+
+    public void shuffleDeck() {
+        ArrayList<Card> tempCardArrList = new ArrayList<>();
+        for(int i = deckOfCards.size() -1; i >= 0; i--) {
+            tempCardArrList.add(deckOfCards.remove(randIntGen(i)));
+        }
+        deckOfCards = tempCardArrList;
+    }
+
+    public int randIntGen(int range) {
+        return (int) Math.ceil(Math.random() * range);
+    }
 }
 
 
