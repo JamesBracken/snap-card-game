@@ -148,11 +148,56 @@ public class Snap extends CardGame {
         }
         activePlayerIndex = (prevPlayerIndex + 1) % players.size();
 
-        System.out.println("prevPlayerIndex" + prevPlayerIndex);
-        System.out.println("activePlayerIndex" + activePlayerIndex);
-        System.out.println("It's " + players.get(activePlayerIndex) + " turn.");
+        displayInGameOptions();
+        handleInGameOptions();
+
+    }
+
+    private void displayInGameOptions() {
+        System.out.println("1) Deal card  \n" +
+                "2) Snap \n" +
+                "3) End turn \n" +
+                "4) Game instructions \n" +
+                "5) Exit game"
+        );
+    }
+
+    private void handleInGameOptions() {
+        boolean validChoice = false;
+        while (!validChoice) {
+
+            String choice = scanner.nextLine().trim();
+            switch (choice) {
+                case "1":
+                    // Deal card
+                    System.out.println("------------------------");
+                    break;
+                case "2":
+                    // Snap
+                    displayInstructions();
+                    System.out.println("------------------------");
+                    break;
+                case "3":
+                    // End turn
 
 //        Add this to the end turn method to set the new state vars
 //        prevPlayerIndex = activePlayerIndex;
+                    System.out.println("------------------------");
+                    break;
+                case "4":
+                    // Game instructions
+                    System.out.println("------------------------");
+                    break;
+                case "5":
+                    // Exit game
+                    System.out.println("------------------------");
+                    break;
+                default:
+                    System.out.println("------------------------");
+                    System.out.println("Invalid choice, please input a correct option");
+                    displayInGameOptions();
+            }
+        }
+
     }
 }
