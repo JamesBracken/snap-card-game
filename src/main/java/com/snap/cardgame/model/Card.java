@@ -24,7 +24,6 @@ public class Card {
         Suit(char suit) {
             this.value = suit;
         }
-
     }
 
     public enum Symbol {
@@ -37,9 +36,9 @@ public class Card {
         }
     }
 
-    String symbolStr;
-    char suit;
-    int symbolInt;
+    private String symbolStr;
+    private char suit;
+    private int symbolInt;
 
     public Card(Suit suit, Symbol symbol) {
         this.symbolInt = symbol.value;
