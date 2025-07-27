@@ -13,8 +13,10 @@ package com.snap.cardgame.service;
 //Add a timer so that when there is a snap opportunity, the player has 2 seconds to
 // submit the word “snap” in order to win. If they don’t type it in time, they lose.
 
+import java.util.Scanner;
+
 //- Create a user scanner input FINISHED
-//- Create an initial user greeting on game start
+//- Create an initial user greeting on game start FINISHED
 //- Create a handleUserInput method which will handle the flow of the game by user input
 //- Make the displayUserOptions method display the user options of  Start new game, Deal card,
 // Snap, End turn, How to play? Exit game, these should be associated with a number
@@ -35,7 +37,10 @@ package com.snap.cardgame.service;
 //-
 //-
 public class Snap extends CardGame {
-//
+
+    private Scanner scanner = new Scanner(System.in);
+
+    //
     public void startGame() {
 //        resetDeck();
 //        shuffleDeck();
@@ -44,4 +49,55 @@ public class Snap extends CardGame {
 //        sortDeckInNumberOrder();
 //        sortDeckIntoSuits();
 //        displayDeck();
+        displayUserStartOptions();
+        handleUserStartOptions();
     }
+
+    private void displayUserStartOptions() {
+        System.out.println("\n" + "Welcome to Snap! Please input a number from the options below \n" +
+                "1) Start new game \n" +
+                "2) Show instructions? \n" +
+                "3) Exit game");
+    }
+
+    private void handleUserStartOptions() {
+        String choice = scanner.nextLine().trim();
+
+        switch (choice) {
+            case "1":
+                System.out.println("------------------------");
+                System.out.println("Add user player functionality here");
+                break;
+            case "2":
+                displayInstructions();
+                System.out.println("------------------------");
+                displayUserStartOptions();
+                handleUserStartOptions();
+                break;
+            case "3":
+                System.out.println("------------------------");
+                System.out.println("You have quit the game, restart the terminal if you change your mind!");
+                break;
+            default:
+                System.out.println("------------------------");
+                System.out.println("Invalid choice, please input a correct option");
+                displayUserStartOptions();
+                handleUserStartOptions();
+        }
+
+
+        scanner.close();
+    }
+
+    private void displayInstructions() {
+        System.out.println("The main goal of Snap is to get 2 cards of the same value in a row. \n" +
+                "If 2 cards of the same value appear consecutively a user has 2 seconds to call snap! \n" +
+                "If a user calls snap in time they win! \n" +
+                "Calling snap is only dependent on the card values not the suits \n" +
+                "For example you can call snap on 2 of club and 2 of spades");
+    }
+
+    //- Make the displayUserOptions method display the user options of  Start new game, Deal card,
+// Snap, End turn, How to play? Exit game, these should be associated with a number
+
+}
