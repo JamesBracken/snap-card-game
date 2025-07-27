@@ -30,8 +30,7 @@ import java.util.Scanner;
 //- Create the startNewTurn method, this must alternate between players on each round and should
 // call on the displayUserOptions
 //- The startNewTurn method should alter some game state values
-//- Create the Player class which will have properties of isPlayerTurn default of false, isCardDealt defaulted to false
-//- Create game state variables of isGameActive, previousCard, currentCard, canSnap, players
+//- Create game state variables of isGameActive, previousCard, currentCard, canSnap, players, isCardDealt defaulted to false
 //- Create a handleSnap method which will enable user input of snap for 2 seconds
 //- The canSnap variable should toggle to true if dealtCard and previousCard is equal in value of symbolInt
 // and back to false if no snap click is made within 2 seconds, likely with a HandleSnap method
@@ -50,6 +49,8 @@ public class Snap extends CardGame {
 
     private Scanner scanner = new Scanner(System.in);
     private List<Player> players = new ArrayList<>();
+    private int prevPlayerIndex = -1;
+    private int activePlayerIndex;
 
     //
     public void startGame() {
@@ -118,6 +119,7 @@ public class Snap extends CardGame {
                 new Player("Player 1");
                 players = Player.getPlayers();
                 players.forEach(System.out::println);
+                startNewTurn();
                 break;
             case "2":
 //                System.out.println("------------------------");
@@ -125,6 +127,7 @@ public class Snap extends CardGame {
                 new Player("Player 2");
                 players = Player.getPlayers();
                 players.forEach(System.out::println);
+                startNewTurn();
                 break;
             default:
                 System.out.println("------------------------");
@@ -134,7 +137,22 @@ public class Snap extends CardGame {
         }
     }
 
-    //- Make the displayUserOptions method display the user options of  Start new game, Deal card,
-// Snap, End turn, How to play? Exit game, these should be associated with a number
+    private void startNewTurn() {
+//        Handle which player should be taking the turn FINISHED
+//        Display user options
+//        Capture input
+//        Handle user input
+//        prevPlayerIndex;
+        if (prevPlayerIndex == -1) {
+            activePlayerIndex = 0;
+        }
+        activePlayerIndex = (prevPlayerIndex + 1) % players.size();
 
+        System.out.println("prevPlayerIndex" + prevPlayerIndex);
+        System.out.println("activePlayerIndex" + activePlayerIndex);
+        System.out.println("It's " + players.get(activePlayerIndex) + " turn.");
+
+//        Add this to the end turn method to set the new state vars
+//        prevPlayerIndex = activePlayerIndex;
+    }
 }

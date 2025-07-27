@@ -17,8 +17,6 @@ public class Player {
         return players;
     }
 
-
-
     public String getName() {
         return name;
     }
