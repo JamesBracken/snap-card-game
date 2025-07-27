@@ -15,6 +15,8 @@ package com.snap.cardgame.service;
 
 import com.snap.cardgame.model.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 //- Create the startNewGame method, this must initialize game state and start a new turn FINISHED
@@ -24,7 +26,7 @@ import java.util.Scanner;
 //- Create a handleUserStartOptions method which will handle the flow of the game by user input FINISHED
 //- Make the handleUserStartOptions method display the user options of  Start new game,
 // How to play?, Exit game, these should be associated with a number FINISHED
-//- The start new game should prompt the user to input how many players will join the game
+//- The start new game should prompt the user to input how many players will join the game FINISHED
 //- Create the startNewTurn method, this must alternate between players on each round and should
 // call on the displayUserOptions
 //- The startNewTurn method should alter some game state values
@@ -47,6 +49,7 @@ import java.util.Scanner;
 public class Snap extends CardGame {
 
     private Scanner scanner = new Scanner(System.in);
+    private List<Player> players = new ArrayList<>();
 
     //
     public void startGame() {
@@ -112,14 +115,16 @@ public class Snap extends CardGame {
 
         switch (choice) {
             case "1":
-                System.out.println("Add functionality to add 1 player");
                 new Player("Player 1");
+                players = Player.getPlayers();
+                players.forEach(System.out::println);
                 break;
             case "2":
-                System.out.println("------------------------");
+//                System.out.println("------------------------");
                 new Player("Player 1");
                 new Player("Player 2");
-
+                players = Player.getPlayers();
+                players.forEach(System.out::println);
                 break;
             default:
                 System.out.println("------------------------");
