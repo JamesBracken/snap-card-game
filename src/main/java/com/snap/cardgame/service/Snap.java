@@ -13,6 +13,7 @@ package com.snap.cardgame.service;
 //Add a timer so that when there is a snap opportunity, the player has 2 seconds to
 // submit the word “snap” in order to win. If they don’t type it in time, they lose.
 
+import com.snap.cardgame.model.Card;
 import com.snap.cardgame.model.Player;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import java.util.Scanner;
 //- The canSnap variable should toggle to true if dealtCard and previousCard is equal in value of symbolInt
 // and back to false if no snap click is made within 2 seconds, likely with a HandleSnap method
 //- Create a handleEndTurn method to end a players turn and start the next turn
-//- The handleEndTurn method should reset/set some game state vars like previousCard, currentCard,
+//- The handleEndTurn method should reset/set some game state vars like previousCard, currentCard, previousPlayer
 //- Create a displayInstructions method to print out some guidance to assist a user in playing
 //-
 //-Close the scanner
@@ -51,10 +52,15 @@ public class Snap extends CardGame {
     private List<Player> players = new ArrayList<>();
     private int prevPlayerIndex = -1;
     private int activePlayerIndex;
+    private Card previousCard;
+    private Card currentCard;
+    private boolean isGameActive = false;
+    private boolean isPlayerCardDealt = false;
 
     //
     public void startGame() {
-//        resetDeck();
+        resetDeck();
+        isGameActive = true;
 //        shuffleDeck();
 //        displayDeck();
 //        dealCard();
@@ -139,15 +145,14 @@ public class Snap extends CardGame {
 
     private void startNewTurn() {
 //        Handle which player should be taking the turn FINISHED
-//        Display user options
-//        Capture input
-//        Handle user input
-//        prevPlayerIndex;
+//        Display user options FINISHED
+//        Capture input FINISHED
+//        Handle user input IN PROGRESS
         if (prevPlayerIndex == -1) {
             activePlayerIndex = 0;
         }
         activePlayerIndex = (prevPlayerIndex + 1) % players.size();
-
+        System.out.println(activePlayerIndex);
         displayInGameOptions();
         handleInGameOptions();
 
@@ -163,25 +168,39 @@ public class Snap extends CardGame {
     }
 
     private void handleInGameOptions() {
-        boolean validChoice = false;
-        while (!validChoice) {
+        boolean finishTurn = false;
+        while (!finishTurn) {
 
             String choice = scanner.nextLine().trim();
             switch (choice) {
                 case "1":
                     // Deal card
+                    //Add an if check to see if the card has been dealt
                     System.out.println("------------------------");
+                    if (!isPlayerCardDealt) {
+                        currentCard = dealCard();
+                        isPlayerCardDealt = true;
+                    } else {
+                        System.out.println("You have already dealt a card on this turn");
+                    }
+                    if (previousCard != null) {
+                        System.out.println("previousCard: " + previousCard);
+                    }
+                    System.out.println("Your card: " + currentCard + "\n");
+//                    finishTurn = true;
+                    displayInGameOptions();
                     break;
                 case "2":
                     // Snap
-                    displayInstructions();
                     System.out.println("------------------------");
                     break;
                 case "3":
                     // End turn
-
-//        Add this to the end turn method to set the new state vars
-//        prevPlayerIndex = activePlayerIndex;
+                    if (isPlayerCardDealt){
+                        endPlayerTurn();
+                    }
+                    //        Add this to the end turn method to set the new state vars
+                    //        prevPlayerIndex = activePlayerIndex;
                     System.out.println("------------------------");
                     break;
                 case "4":
@@ -195,9 +214,21 @@ public class Snap extends CardGame {
                 default:
                     System.out.println("------------------------");
                     System.out.println("Invalid choice, please input a correct option");
+                    finishTurn = false;
                     displayInGameOptions();
             }
         }
 
+    }
+
+    private void endPlayerTurn() {
+        previousCard = currentCard;
+        isPlayerCardDealt = false;
+        prevPlayerIndex = activePlayerIndex;
+        startNewTurn();
+    }
+
+    protected Card getPreviousCard() {
+        return previousCard;
     }
 }

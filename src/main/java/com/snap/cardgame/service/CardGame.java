@@ -36,7 +36,6 @@ import java.util.Comparator;
 
 public class CardGame {
     //    No game functionality reason to keep a log of all
-    private Card previousCard;
     private ArrayList<Card> deckOfCards = new ArrayList<>();
 
     protected void resetDeck() {
@@ -57,11 +56,6 @@ public class CardGame {
 
     protected Card dealCard() {
         Card removedCard = deckOfCards.removeFirst();
-        if (previousCard != null) {
-            System.out.println("previousCard: " + previousCard);
-        }
-        System.out.println("Your card: " + removedCard + "\n");
-        previousCard = removedCard; // May have to move this depending on implementation
         return removedCard;
     }
 
