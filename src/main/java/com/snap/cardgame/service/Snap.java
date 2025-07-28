@@ -77,28 +77,37 @@ public class Snap extends CardGame {
     }
 
     private void handleUserStartOptions() {
-        String choice = scanner.nextLine().trim();
+        boolean isHandlerActive = true;
 
-        displayPlayerSelect();
-        switch (choice) {
-            case "1":
-                System.out.println("------------------------");
-                handlePlayerSelect();
-                break;
-            case "2":
-                displayInstructions();
-                System.out.println("------------------------");
-                handleUserStartOptions();
-                break;
-            case "3":
-                System.out.println("------------------------");
-                System.out.println("You have quit the game, restart the terminal if you change your mind!");
-                // Add end game method here
-                break;
-            default:
-                System.out.println("------------------------");
-                System.out.println("Invalid choice, please input a correct option");
-                handleUserStartOptions();
+        while (isHandlerActive) {
+            String choice = scanner.nextLine().trim();
+            // Attempted to place displayUserStartOptions here however this caused some issues in the
+            // displaying of the code order likely due to the scanner
+            // I have instead placed it in each necessary switch case
+
+            switch (choice) {
+                case "1":
+                    System.out.println("------------------------");
+                    displayPlayerSelect();
+                    handlePlayerSelect();
+                    isHandlerActive = false;
+                    break;
+                case "2":
+                    displayInstructions();
+                    System.out.println("------------------------");
+                    displayUserStartOptions();
+                    break;
+                case "3":
+                    System.out.println("------------------------");
+                    System.out.println("You have quit the game, restart the terminal if you change your mind!");
+                    isHandlerActive = false;
+                    // Add end game method here
+                    break;
+                default:
+                    System.out.println("------------------------");
+                    System.out.println("Invalid choice, please input a correct option");
+                    displayUserStartOptions();
+            }
         }
     }
 
@@ -115,28 +124,33 @@ public class Snap extends CardGame {
     }
 
     private void handlePlayerSelect() {
-        String choice = scanner.nextLine().trim();
+        boolean isHandlerActive = true;
 
-        switch (choice) {
-            case "1":
-                new Player("Player 1");
-                players = Player.getPlayers();
-                players.forEach(System.out::println);
-                startNewTurn();
-                break;
-            case "2":
+        while (isHandlerActive) {
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    new Player("Player 1");
+                    players = Player.getPlayers();
+                    players.forEach(System.out::println);
+                    isHandlerActive = false;
+                    startNewTurn();
+                    break;
+                case "2":
 //                System.out.println("------------------------");
-                new Player("Player 1");
-                new Player("Player 2");
-                players = Player.getPlayers();
-                players.forEach(System.out::println);
-                startNewTurn();
-                break;
-            default:
-                System.out.println("------------------------");
-                System.out.println("Invalid choice, please input a correct option");
-                displayPlayerSelect();
-                handlePlayerSelect();
+                    new Player("Player 1");
+                    new Player("Player 2");
+                    players = Player.getPlayers();
+                    players.forEach(System.out::println);
+                    isHandlerActive = false;
+                    startNewTurn();
+                    break;
+                default:
+                    System.out.println("------------------------");
+                    System.out.println("Invalid choice, please input a correct option");
+                    displayPlayerSelect();
+            }
         }
     }
 
@@ -180,7 +194,7 @@ public class Snap extends CardGame {
                     break;
                 case "2": // Snap
                     boolean snapResult = handlePlayerSnap();
-                    if(snapResult) {
+                    if (snapResult) {
                         finishTurn = true;
                         handleFinishGame();
                     }
@@ -249,13 +263,10 @@ public class Snap extends CardGame {
 
     private void handleFinishGame() {
         if (winner != null) {
-        System.out.println("Oh Snap!" + players.get(activePlayerIndex) + " won!");
+            System.out.println("Oh Snap!" + players.get(activePlayerIndex) + " won!");
             // Add custom congrats
         } else if (winner == null) { // In the unlikely scenario of a game having no snaps run this block
             System.out.println("Oh Snap! No snaps were made in this game :(");
         }
-
     }
-
-
 }
