@@ -32,7 +32,7 @@ import java.util.*;
 //- Create game state variables of isGameActive, previousCard, currentCard, canSnap, players, isCardDealt defaulted to false FINISHED
 //- Create a handleSnap method which will enable user input of snap for 2 seconds
 //- The canSnap variable should toggle to true if dealtCard and previousCard is equal in value of symbolInt
-// and back to false if no snap click is made within 2 seconds, likely with a HandleSnap method
+// and back to false if no snap click is made within 2 seconds, likely with a HandleSnap method FINISHED
 //- Create a handleEndTurn method to end a players turn and start the next turn FINISHED
 //- The handleEndTurn method should reset/set some game state vars like previousCard, previousPlayer FINISHED
 //- Create a displayInstructions method to print out some guidance to assist a user in playing FINISHED
@@ -52,14 +52,13 @@ public class Snap extends CardGame {
     private int activePlayerIndex;
     private Card previousCard;
     private Card currentCard;
-    private boolean isGameActive = false;
     private boolean isPlayerCardDealt = false;
     private Timer timer;
     private boolean canCallSnap;
+    private Player winner = null;
 
     public void startGame() {
         resetDeck();
-        isGameActive = true;
 //        shuffleDeck();
 //        displayDeck();
 //        dealCard();
@@ -182,8 +181,8 @@ public class Snap extends CardGame {
                 case "2": // Snap
                     boolean snapResult = handlePlayerSnap();
                     if(snapResult) {
-                        // Add game end methods here
                         finishTurn = true;
+                        handleFinishGame();
                     }
                     System.out.println("------------------------");
                     break;
@@ -212,7 +211,7 @@ public class Snap extends CardGame {
         } else if (previousCard == null) {
             System.out.println("There has only been 1 card dealt, no way to snap here!");
         } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && canCallSnap) { // Winning instance
-            System.out.println("Oh Snap!" + players.get(activePlayerIndex) + " won!");
+            winner = players.get(activePlayerIndex);
             return true;
         } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && !canCallSnap) {
             System.out.println("The cards are the same however you ran out of time, you must call snap within 2 seconds");
@@ -247,4 +246,16 @@ public class Snap extends CardGame {
                 """);
         startNewTurn();
     }
+
+    private void handleFinishGame() {
+        if (winner != null) {
+        System.out.println("Oh Snap!" + players.get(activePlayerIndex) + " won!");
+            // Add custom congrats
+        } else if (winner == null) { // In the unlikely scenario of a game having no snaps run this block
+            System.out.println("Oh Snap! No snaps were made in this game :(");
+        }
+
+    }
+
+
 }
