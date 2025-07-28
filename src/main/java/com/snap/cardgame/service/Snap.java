@@ -173,25 +173,17 @@ public class Snap extends CardGame {
                     }
                     if (previousCard != null) {
                         System.out.println("previousCard: " + previousCard);
-                        if(currentCard.getSymbolInt() == previousCard.getSymbolInt()) {
+                        if (currentCard.getSymbolInt() == previousCard.getSymbolInt()) {
                             startSnapTimer();
                         }
                     }
                     System.out.println("Your card: " + currentCard + "\n");
                     break;
                 case "2": // Snap
-
-                    // Add handlePlayerSnap method here
-                    if (!isPlayerCardDealt) {
-                        System.out.println("You must deal a card first");
-                    } else if(previousCard == null) {
-                        System.out.println("There has only been 1 card dealt, no way to snap here!");
-                    } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && canCallSnap) {
-                        System.out.println("Oh Snap!" + players.get(activePlayerIndex) + " won!");
-                    } else if(currentCard.getSymbolInt() == previousCard.getSymbolInt() && !canCallSnap) {
-                        System.out.println("The cards are the same however you ran out of time, you must call snap within 2 seconds");
-                    }else if (currentCard != previousCard) {
-                        System.out.println("The card you dealt is not of the same value as the previous card");
+                    boolean snapResult = handlePlayerSnap();
+                    if(snapResult) {
+                        // Add game end methods here
+                        finishTurn = true;
                     }
                     System.out.println("------------------------");
                     break;
@@ -214,22 +206,31 @@ public class Snap extends CardGame {
         }
     }
 
-    private void handlePlayerSnap() {
-
+    private boolean handlePlayerSnap() {
+        if (!isPlayerCardDealt) {
+            System.out.println("You must deal a card first");
+        } else if (previousCard == null) {
+            System.out.println("There has only been 1 card dealt, no way to snap here!");
+        } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && canCallSnap) { // Winning instance
+            System.out.println("Oh Snap!" + players.get(activePlayerIndex) + " won!");
+            return true;
+        } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && !canCallSnap) {
+            System.out.println("The cards are the same however you ran out of time, you must call snap within 2 seconds");
+        } else if (currentCard != previousCard) {
+            System.out.println("The card you dealt is not of the same value as the previous card");
+        }
+        return false;
     }
 
     private void startSnapTimer() {
         System.out.println("Enabling snap for 2 seconds");
         canCallSnap = true;
-        System.out.println("canCallSnap: " + canCallSnap);
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 canCallSnap = false;
-                System.out.println("Snap now disabled");
-                System.out.println("canCallSnap: " + canCallSnap);
                 timer.cancel();
             }
         }, 2000);
