@@ -64,7 +64,7 @@ public class Snap extends CardGame {
 //        shuffleDeck();
 //        displayDeck();
 //        dealCard();
-//        sortDeckInNumberOrder();
+        sortDeckInNumberOrder();
 //        sortDeckIntoSuits();
 //        displayDeck();
         displayUserStartOptions();
@@ -148,21 +148,16 @@ public class Snap extends CardGame {
 //        Display user options FINISHED
 //        Capture input FINISHED
 //        Handle user input IN PROGRESS
-        if (prevPlayerIndex == -1) {
-            activePlayerIndex = 0;
-        }
         activePlayerIndex = (prevPlayerIndex + 1) % players.size();
-        System.out.println(activePlayerIndex);
-        displayInGameOptions();
+        System.out.println("activePlayerIndex: " + activePlayerIndex + "\n");
         handleInGameOptions();
-
     }
 
     private void displayInGameOptions() {
         System.out.println("1) Deal card  \n" +
                 "2) Snap \n" +
                 "3) End turn \n" +
-                "4) Game instructions \n" +
+                "4) Game instructions - Might be unnecessary \n" +
                 "5) Exit game"
         );
     }
@@ -170,7 +165,9 @@ public class Snap extends CardGame {
     private void handleInGameOptions() {
         boolean finishTurn = false;
         while (!finishTurn) {
-
+            System.out.println("In handleInGameOptions isPlayerCardDealt: " + isPlayerCardDealt);
+            //Calling in game options here as we need to display it on every iteration except after end turn
+            displayInGameOptions();
             String choice = scanner.nextLine().trim();
             switch (choice) {
                 case "1":
@@ -187,17 +184,25 @@ public class Snap extends CardGame {
                         System.out.println("previousCard: " + previousCard);
                     }
                     System.out.println("Your card: " + currentCard + "\n");
-//                    finishTurn = true;
-                    displayInGameOptions();
                     break;
                 case "2":
                     // Snap
+                    if (!isPlayerCardDealt) {
+                        System.out.println("You must deal a card first");
+                    } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt()) {
+                        System.out.println("Oh Snap!" +  + " won!");
+                    } else if (currentCard != previousCard) {
+                        System.out.println("The card you dealt is not of the same value as the previous card");
+                    }
                     System.out.println("------------------------");
                     break;
                 case "3":
                     // End turn
-                    if (isPlayerCardDealt){
+                    if (isPlayerCardDealt) {
                         endPlayerTurn();
+                        finishTurn = true;
+                    } else {
+                        System.out.println("You must deal a card first");
                     }
                     //        Add this to the end turn method to set the new state vars
                     //        prevPlayerIndex = activePlayerIndex;
@@ -214,8 +219,7 @@ public class Snap extends CardGame {
                 default:
                     System.out.println("------------------------");
                     System.out.println("Invalid choice, please input a correct option");
-                    finishTurn = false;
-                    displayInGameOptions();
+//                    finishTurn = false;
             }
         }
 
