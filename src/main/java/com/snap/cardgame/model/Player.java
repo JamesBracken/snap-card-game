@@ -9,9 +9,13 @@ import java.util.List;
  * Tracks the player's name and stores all created players.
  */
 public class Player {
-    private static final List<Player> players = new ArrayList<>();
 
+    // Fields------------
+
+    private static final List<Player> players = new ArrayList<>();
     private String name;
+
+    // Constructors----------------
 
     /**
      * Creates a new player with the given name and adds them to the list of players.
@@ -23,6 +27,8 @@ public class Player {
         players.add(this);
     }
 
+    // Static methods---------------
+
     /**
      * Returns a list of all players.
      *
@@ -31,6 +37,8 @@ public class Player {
     public static List<Player> getPlayers() {
         return players;
     }
+
+    // Getters and setters--------------
 
     /**
      * Returns the name of the player.
@@ -46,10 +54,12 @@ public class Player {
      *
      * @param name new name
      */
-    //This method is currently unused however I am leaving this for future iteratons
+    // This method is currently unused however I am leaving this for future iterations
     public void setName(String name) {
         this.name = name;
     }
+
+    // Overrides-------------------
 
     /**
      * Returns a string representation of the player.

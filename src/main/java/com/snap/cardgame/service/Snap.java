@@ -1,49 +1,10 @@
 package com.snap.cardgame.service;
 
-//Stage 3
-//Create class for Snap that extends CardGame.
-//This class should use the methods defined above, as well as some new ones,
-// to enable the user to play the game snap according to the following rules:
-//By pressing enter in the command line, the user takes their turn.
-//Each turn, a new card is dealt from the deck.
-//The game continues until two cards in a row have the same symbol, at which
-// point the “player” wins and the game ends.
-//Create a Player class and enable the snap game to be two player, with the users
-// taking it in turns to go. If the snap occurs on the users turn, they win.
-//Add a timer so that when there is a snap opportunity, the player has 2 seconds to
-// submit the word “snap” in order to win. If they don’t type it in time, they lose.
-
 import com.snap.cardgame.model.Card;
 import com.snap.cardgame.model.Player;
 
 import java.util.*;
 
-//- Create the startNewGame method, this must initialize game state and start a new turn FINISHED
-//- Create a user scanner input FINISHED
-//- Create an initial user greeting on game start FINISHED
-//- Create a displayUserStartOptions which will display the starting options of a user FINISHED
-//- Create a handleUserStartOptions method which will handle the flow of the game by user input FINISHED
-//- Make the handleUserStartOptions method display the user options of  Start new game,
-// How to play?, Exit game, these should be associated with a number FINISHED
-//- The start new game should prompt the user to input how many players will join the game FINISHED
-//- Create the startNewTurn method, this must alternate between players on each round and should
-// call on the displayUserOptions FINISHED
-//- The startNewTurn method should alter some game state values FINISHED
-//- Create game state variables of isGameActive, previousCard, currentCard, canSnap, players, isCardDealt defaulted to false FINISHED
-//- Create a handleSnap method which will enable user input of snap for 2 seconds
-//- The canSnap variable should toggle to true if dealtCard and previousCard is equal in value of symbolInt
-// and back to false if no snap click is made within 2 seconds, likely with a HandleSnap method FINISHED
-//- Create a handleEndTurn method to end a players turn and start the next turn FINISHED
-//- The handleEndTurn method should reset/set some game state vars like previousCard, previousPlayer FINISHED
-//- Create a displayInstructions method to print out some guidance to assist a user in playing FINISHED
-//-
-//-Close the scanner
-//CHANGED-----------
-//- Make the displayUserOptions method display the user options of  Start new game, Deal card,
-// Snap, End turn, How to play? Exit game, these should be associated with a number
-//-
-//-
-//-
 /**
  * Snap game logic extending CardGame.
  *
@@ -51,16 +12,21 @@ import java.util.*;
  */
 public class Snap extends CardGame {
 
+    // Fields----------
     private final Scanner scanner = new Scanner(System.in);
+
     private List<Player> players = new ArrayList<>();
     private int prevPlayerIndex = -1;
     private Player winner = null;
     private boolean isPlayerCardDealt = false;
+
     private int activePlayerIndex;
     private Card previousCard;
     private Card currentCard;
     private Timer timer;
     private boolean canCallSnap;
+
+    // Public methods---------------
 
     /**
      * Initializes and starts the game.
@@ -71,6 +37,8 @@ public class Snap extends CardGame {
         displayUserStartOptions();
         handleUserStartOptions();
     }
+
+    // Private methods---------------
 
     /**
      * Displays start game menu options.
@@ -147,7 +115,6 @@ public class Snap extends CardGame {
                     new Player("Player 1");
                     new Player("Player 2");
                     players = Player.getPlayers();
-                    // Displaying each player to the terminal
                     players.forEach(System.out::println);
                     isHandlerActive = false;
                     startNewTurn();

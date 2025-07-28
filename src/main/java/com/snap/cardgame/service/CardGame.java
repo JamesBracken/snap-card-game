@@ -3,7 +3,6 @@ package com.snap.cardgame.service;
 import com.snap.cardgame.model.Card;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Manages 52 card deck games.
@@ -12,16 +11,19 @@ import java.util.Comparator;
  */
 public class CardGame {
 
+    // Fields-----------
+
     /**
      * The current deck of cards.
      */
     private ArrayList<Card> deckOfCards = new ArrayList<>();
 
+    // Protected methods-------------
+
     /**
      * Resets a deck to the full 52 cards deck with all suits and symbols.
      *
      * Clears any existing cards.
-     *
      */
     protected void resetDeck() {
         deckOfCards = new ArrayList<>();
@@ -67,7 +69,6 @@ public class CardGame {
      * Sorts the deck by card value in ascending order.
      *
      * All 2s come first, the deck ends with Aces having a value of 14.
-     *
      */
     protected void sortDeckInNumberOrder() {
         deckOfCards.sort((a, b) -> a.getSymbolInt() - b.getSymbolInt());
@@ -77,11 +78,10 @@ public class CardGame {
      * Randomly shuffles the deck into a new order.
      *
      * Uses random selection to reorder all cards.
-     *
      */
     protected void shuffleDeck() {
         ArrayList<Card> tempCardArrList = new ArrayList<>();
-        for(int i = deckOfCards.size() -1; i >= 0; i--) {
+        for (int i = deckOfCards.size() - 1; i >= 0; i--) {
             tempCardArrList.add(deckOfCards.remove(randIntGen(i)));
         }
         deckOfCards = tempCardArrList;
@@ -95,6 +95,8 @@ public class CardGame {
     protected ArrayList<Card> getDeckOfCards() {
         return deckOfCards;
     }
+
+    // Private methods------------------
 
     /**
      * Generates a random integer between 0 and the specified range param.

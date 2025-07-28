@@ -5,6 +5,8 @@ package com.snap.cardgame.model;
  */
 public class Card {
 
+    // Enums-----------
+
     /**
      * Enum for the four card suits.
      */
@@ -32,9 +34,13 @@ public class Card {
         }
     }
 
+    // Fields-----------
+
     private String symbolStr;
     private char suit;
     private int symbolInt;
+
+    // Constructor--------------
 
     /**
      * Constructs a Card with a suit and symbol.
@@ -47,6 +53,8 @@ public class Card {
         this.symbolStr = symbol.name();
         this.suit = suit.value;
     }
+
+    // Getters and setters--------------
 
     /**
      * @return the Unicode character for the card suit
@@ -61,6 +69,8 @@ public class Card {
     public int getSymbolInt() {
         return symbolInt;
     }
+
+    // Overrides---------------
 
     /**
      * @return a string description of the card
