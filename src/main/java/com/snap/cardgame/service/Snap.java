@@ -44,31 +44,37 @@ import java.util.*;
 //-
 //-
 //-
+/**
+ * Snap game logic extending CardGame.
+ *
+ * Manages turns, players, card dealing, and snap handling.
+ */
 public class Snap extends CardGame {
 
     private final Scanner scanner = new Scanner(System.in);
     private List<Player> players = new ArrayList<>();
     private int prevPlayerIndex = -1;
+    private Player winner = null;
+    private boolean isPlayerCardDealt = false;
     private int activePlayerIndex;
     private Card previousCard;
     private Card currentCard;
-    private boolean isPlayerCardDealt = false;
     private Timer timer;
     private boolean canCallSnap;
-    private Player winner = null;
 
+    /**
+     * Initializes and starts the game.
+     */
     public void startGame() {
         resetDeck();
-//        shuffleDeck();
-//        displayDeck();
-//        dealCard();
         sortDeckInNumberOrder();
-//        sortDeckIntoSuits();
-//        displayDeck();
         displayUserStartOptions();
         handleUserStartOptions();
     }
 
+    /**
+     * Displays start game menu options.
+     */
     private void displayUserStartOptions() {
         System.out.println("\n" + "Welcome to Snap! Please input a number from the options below \n" +
                 "1) Ready to play! \n" +
@@ -76,53 +82,53 @@ public class Snap extends CardGame {
                 "3) Exit game");
     }
 
+    /**
+     * Handles user input for the start menu.
+     */
     private void handleUserStartOptions() {
         boolean isHandlerActive = true;
 
         while (isHandlerActive) {
             String choice = scanner.nextLine().trim();
-            // Attempted to place displayUserStartOptions here however this caused some issues in the
-            // displaying of the code order likely due to the scanner
-            // I have instead placed it in each necessary switch case
-
             switch (choice) {
                 case "1":
-                    System.out.println("------------------------");
                     displayPlayerSelect();
                     handlePlayerSelect();
                     isHandlerActive = false;
                     break;
                 case "2":
                     displayInstructions();
-                    System.out.println("------------------------");
                     displayUserStartOptions();
                     break;
                 case "3":
-                    System.out.println("------------------------");
                     System.out.println("You have quit the game, restart the terminal if you change your mind!");
-                    isHandlerActive = false;
-                    // Add end game method here
-                    break;
+                    return;
                 default:
-                    System.out.println("------------------------");
                     System.out.println("Invalid choice, please input a correct option");
                     displayUserStartOptions();
             }
         }
     }
 
+    /**
+     * Displays instructions on how to play the game.
+     */
     private void displayInstructions() {
-        System.out.println("The main goal of Snap is to get 2 cards of the same value in a row. \n" +
-                "If 2 cards of the same value appear consecutively a user has 2 seconds to call snap! \n" +
-                "If a user calls snap in time they win! \n" +
-                "Calling snap is only dependent on the card values not the suits \n" +
-                "For example you can call snap on 2 of club and 2 of spades");
+        System.out.println("The main goal of Snap is to get 2 cards of the same value in a row.\n" +
+                "If 2 cards of the same value appear consecutively, a user has 2 seconds to call snap.\n" +
+                "Snap is based on value, not suit.");
     }
 
+    /**
+     * Prompts the user to choose the number of players.
+     */
     private void displayPlayerSelect() {
         System.out.println("Please select how many players will be in the game up to a maximum of 2");
     }
 
+    /**
+     * Handles player count selection and creates player instances.
+     */
     private void handlePlayerSelect() {
         boolean isHandlerActive = true;
 
@@ -133,108 +139,126 @@ public class Snap extends CardGame {
                 case "1":
                     new Player("Player 1");
                     players = Player.getPlayers();
-                    players.forEach(System.out::println);
+                    System.out.println(players.getFirst());
                     isHandlerActive = false;
                     startNewTurn();
                     break;
                 case "2":
-//                System.out.println("------------------------");
                     new Player("Player 1");
                     new Player("Player 2");
                     players = Player.getPlayers();
+                    // Displaying each player to the terminal
                     players.forEach(System.out::println);
                     isHandlerActive = false;
                     startNewTurn();
                     break;
                 default:
-                    System.out.println("------------------------");
                     System.out.println("Invalid choice, please input a correct option");
                     displayPlayerSelect();
             }
         }
     }
 
+    /**
+     * Starts a new player's turn, alternating between players.
+     */
     private void startNewTurn() {
         activePlayerIndex = (prevPlayerIndex + 1) % players.size();
-        System.out.println("activePlayerIndex: " + activePlayerIndex + "\n");
         handleInGameOptions();
     }
 
+    /**
+     * Displays available in-game options during a player's turn.
+     */
     private void displayInGameOptions() {
         System.out.println("1) Deal card  \n" +
                 "2) Snap \n" +
                 "3) End turn \n" +
-                "4) Exit game \n"
-        );
+                "4) Exit game \n");
     }
 
+    /**
+     * Handles in-game input during a player's turn.
+     */
     private void handleInGameOptions() {
         boolean finishTurn = false;
         while (!finishTurn) {
-            System.out.println("In handleInGameOptions isPlayerCardDealt: " + isPlayerCardDealt);
-            //Calling in game options here as we need to display it on every iteration except after end turn
             displayInGameOptions();
             String choice = scanner.nextLine().trim();
             switch (choice) {
-                case "1": // Deal card
-                    System.out.println("------------------------");
+                case "1":
+                    if (getDeckOfCards().isEmpty()) {
+                        handleFinishGame();
+                        return;
+                    }
+
                     if (!isPlayerCardDealt) {
                         currentCard = dealCard();
                         isPlayerCardDealt = true;
                     } else {
                         System.out.println("You have already dealt a card on this turn");
                     }
-                    if (previousCard != null) {
-                        System.out.println("previousCard: " + previousCard);
-                        if (currentCard.getSymbolInt() == previousCard.getSymbolInt()) {
-                            startSnapTimer();
-                        }
+
+                    if (previousCard != null &&
+                            currentCard.getSymbolInt() == previousCard.getSymbolInt()) {
+                        startSnapTimer();
                     }
+
                     System.out.println("Your card: " + currentCard + "\n");
                     break;
-                case "2": // Snap
+
+                case "2":
                     boolean snapResult = handlePlayerSnap();
                     if (snapResult) {
                         finishTurn = true;
+                        winner = players.get(activePlayerIndex);
                         handleFinishGame();
                     }
-                    System.out.println("------------------------");
                     break;
-                case "3": // End turn
+
+                case "3":
                     if (isPlayerCardDealt) {
                         endPlayerTurn();
                         finishTurn = true;
                     } else {
                         System.out.println("You must deal a card first");
                     }
-                    System.out.println("------------------------");
                     break;
-                case "4": // Exit game
-                    System.out.println("------------------------");
-                    break;
-                default: // Invalid inputs
-                    System.out.println("------------------------");
+
+                case "4":
+                    System.out.println("You have quit the game, restart the terminal if you change your mind!");
+                    return;
+
+                default:
                     System.out.println("Invalid choice, please input a correct option");
             }
         }
     }
 
+    /**
+     * Handles the logic when a player attempts to snap.
+     *
+     * @return true if the snap was valid & within time, false otherwise.
+     */
     private boolean handlePlayerSnap() {
         if (!isPlayerCardDealt) {
             System.out.println("You must deal a card first");
         } else if (previousCard == null) {
-            System.out.println("There has only been 1 card dealt, no way to snap here!");
-        } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && canCallSnap) { // Winning instance
+            System.out.println("Only one card has been dealt so far");
+        } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && canCallSnap) {
             winner = players.get(activePlayerIndex);
             return true;
         } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && !canCallSnap) {
-            System.out.println("The cards are the same however you ran out of time, you must call snap within 2 seconds");
-        } else if (currentCard != previousCard) {
-            System.out.println("The card you dealt is not of the same value as the previous card");
+            System.out.println("Snap was too slow. You had 2 seconds to react.");
+        } else {
+            System.out.println("Cards do not match");
         }
         return false;
     }
 
+    /**
+     * Starts a 2 second timer limit for a player to snap.
+     */
     private void startSnapTimer() {
         System.out.println("Enabling snap for 2 seconds");
         canCallSnap = true;
@@ -249,24 +273,25 @@ public class Snap extends CardGame {
         }, 2000);
     }
 
+    /**
+     * Ends the current player's turn and prepares for the next.
+     */
     private void endPlayerTurn() {
         previousCard = currentCard;
         isPlayerCardDealt = false;
         prevPlayerIndex = activePlayerIndex;
-        // Creating some spacing between each turn
-        System.out.println("""
-                
-                
-                """);
         startNewTurn();
     }
 
+    /**
+     * Displays the game result and ends the game.
+     */
     private void handleFinishGame() {
         if (winner != null) {
-            System.out.println("Oh Snap!" + players.get(activePlayerIndex) + " won!");
-            // Add custom congrats
-        } else if (winner == null) { // In the unlikely scenario of a game having no snaps run this block
+            System.out.println("Oh Snap! " + players.get(activePlayerIndex) + " won!");
+        } else {
             System.out.println("Oh Snap! No snaps were made in this game :(");
         }
+        System.out.println("Finishing game.");
     }
 }

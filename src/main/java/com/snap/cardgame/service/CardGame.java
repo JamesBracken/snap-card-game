@@ -1,43 +1,28 @@
 package com.snap.cardgame.service;
 
-
-//Contains an ArrayList<Card> for the deckOfCards that contains all 52 cards. FINISHED
-//- Create the array FINISHED
-//This is created and populated when the game is constructed. FINISHED
-//- Create a resetDeck method to populate the deckOfCards with 52 cards FINISHED
-//- The method should clear the deckOfCards prior to population to create a clean game state OR FINISHED
-//you can create a new round function which will do this and a separate initialiseDeck function FINISHED
-//Has a name which is also defined in the constructor.------------------------???
-//- a name for what???? -----------------------------------------------???
-//Has a getDeck method that lists out the cards in the deck. FINISHED
-
-//Stage 2
-//Lets get some core functionality to our CardGame by implementing the following methods: FINISHED
-//Card dealCard() FINISHED
-//Takes the card from the top of the deck and returns it. FINISHED
-//- Create a dealCard method and make it remove a card from the main deck
-//- Display the removed card with the previously removed card if there was one
-//ArrayList<Card> sortDeckInNumberOrder()  FINISHED
-//Sorts the deck in number order (e.g. 2222333344445555 etc) and stores the new shuffled deck back into the deckOfCards attribute.FINISHED
-//- Create a method to organise the current deck into a number order
-//ArrayList<Card> sortDeckIntoSuits() FINISHED
-//Sorts the deck into suits (2,3,4,5,6,7,8,9,10,J,Q,K,A of hearts, then 2,3,4,5,6,7,8,9,10,J,Q,K,A of clubs etc.) and stores the new shuffled deck back into the deckOfCards attribute. FINISHED
-//- Create a method to organise the current deck into suits
-//ArrayList<Card> shuffleDeck()
-//Shuffles the deck into a random order and stores the new shuffled deck back into the deckOfCards attribute.
-//- Create a random int generator to generate an integer, this will receive a parameter as a max range
-//- Create a method which contains a loop to transfer all deckOfCard items into a temp array in a random order
-//- Using the same method transfer the temp array data back into the deckOfCards
-
 import com.snap.cardgame.model.Card;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * Manages 52 card deck games.
+ *
+ * Contains methods for shuffling, dealing, sorting, and resetting a deck.
+ */
 public class CardGame {
-    //    No game functionality reason to keep a log of all
+
+    /**
+     * The current deck of cards.
+     */
     private ArrayList<Card> deckOfCards = new ArrayList<>();
 
+    /**
+     * Resets a deck to the full 52 cards deck with all suits and symbols.
+     *
+     * Clears any existing cards.
+     *
+     */
     protected void resetDeck() {
         deckOfCards = new ArrayList<>();
         for (Card.Suit suit : Card.Suit.values()) {
@@ -48,25 +33,52 @@ public class CardGame {
         }
     }
 
+    /**
+     * Prints all cards currently in the deck to the console.
+     */
     protected void displayDeck() {
         for (Card card : deckOfCards) {
             System.out.println(card);
         }
     }
 
+    /**
+     * Removes and returns the top card from the deck.
+     *
+     * The card is removed from the deck until deck reset
+     *
+     * @return the removed card
+     * @throws IndexOutOfBoundsException if the deck is empty
+     */
     protected Card dealCard() {
-        Card removedCard = deckOfCards.removeFirst();
-        return removedCard;
+        return deckOfCards.removeFirst();
     }
 
+    /**
+     * Sorts the deck by suit.
+     *
+     * Groups all cards of the same suit together.
+     */
     protected void sortDeckIntoSuits() {
         deckOfCards.sort((a, b) -> b.getSuit() - a.getSuit());
     }
 
+    /**
+     * Sorts the deck by card value in ascending order.
+     *
+     * All 2s come first, the deck ends with Aces having a value of 14.
+     *
+     */
     protected void sortDeckInNumberOrder() {
         deckOfCards.sort((a, b) -> a.getSymbolInt() - b.getSymbolInt());
     }
 
+    /**
+     * Randomly shuffles the deck into a new order.
+     *
+     * Uses random selection to reorder all cards.
+     *
+     */
     protected void shuffleDeck() {
         ArrayList<Card> tempCardArrList = new ArrayList<>();
         for(int i = deckOfCards.size() -1; i >= 0; i--) {
@@ -75,6 +87,21 @@ public class CardGame {
         deckOfCards = tempCardArrList;
     }
 
+    /**
+     * Returns the current deck of cards.
+     *
+     * @return the current deck as an ArrayList of Card objects
+     */
+    protected ArrayList<Card> getDeckOfCards() {
+        return deckOfCards;
+    }
+
+    /**
+     * Generates a random integer between 0 and the specified range param.
+     *
+     * @param range the upper bound (exclusive) for the random number
+     * @return a random integer from 0 to range
+     */
     private int randIntGen(int range) {
         return (int) Math.ceil(Math.random() * range);
     }
