@@ -131,7 +131,8 @@ public class Snap extends CardGame {
             } else if ((playerAmount < MIN_PLAYERS || playerAmount > MAX_PLAYERS) && (!wantCustomNames.equals("n") && !wantCustomNames.equals("y"))) {
                 System.out.println("Invalid choices, please input a player amount inbetween 1-8 " + "\n"
                         + "and type in y/n for name customisation");
-            } else if (playerAmount < MIN_PLAYERS || playerAmount > MAX_PLAYERS) {
+            } else if (playerAmount < MIN_PLAYERS || playerAmount > MAX_PLAYERS
+            ) {
                 System.out.println("Invalid choice, please input a correct player amount");
             } else if (!wantCustomNames.equals("n") && !wantCustomNames.equals("y")) {
                 System.out.println("Invalid choice, please input y/n ");
@@ -156,7 +157,6 @@ public class Snap extends CardGame {
             new Player(playerName);
         }
     }
-
 
     /**
      * Starts a new player's turn, alternating between players.

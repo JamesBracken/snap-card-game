@@ -1,6 +1,8 @@
 package com.snap.cardgame.service;
 
 import com.snap.cardgame.model.Card;
+import com.snap.cardgame.model.Suit;
+import com.snap.cardgame.model.Symbol;
 
 import java.util.ArrayList;
 
@@ -27,8 +29,8 @@ public class CardGame {
      */
     protected void resetDeck() {
         deckOfCards = new ArrayList<>();
-        for (Card.Suit suit : Card.Suit.values()) {
-            for (Card.Symbol symbol : Card.Symbol.values()) {
+        for (Suit suit : Suit.values()) {
+            for (Symbol symbol : Symbol.values()) {
                 Card card = new Card(suit, symbol);
                 deckOfCards.add(card);
             }
