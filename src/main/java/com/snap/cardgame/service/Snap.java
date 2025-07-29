@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * Snap game logic extending CardGame.
- *
+ * <p>
  * Manages turns, players, card dealing, and snap handling.
  */
 public class Snap extends CardGame {
@@ -61,7 +61,6 @@ public class Snap extends CardGame {
             String choice = scanner.nextLine().trim();
             switch (choice) {
                 case "1":
-                    displayPlayerSelect();
                     handlePlayerSelect();
                     isHandlerActive = false;
                     break;
@@ -103,12 +102,25 @@ public class Snap extends CardGame {
 
         while (isHandlerActive) {
 
-
-//            String wantCustomNames = scanner.nextLine().trim().toLowerCase();
-//            System.out.println(wantCustomNames);
+            System.out.println("Would you like to make custom names for each player? Input y/n.");
+            String wantCustomNames = scanner.nextLine().trim().toLowerCase();
+            System.out.println("wantCustomNames: " + wantCustomNames);
+            displayPlayerSelect();
             int playerAmount = Integer.parseInt(scanner.nextLine().trim());
             //Nest this if in another if based on if we want custom names
-            if(playerAmount > 0 && playerAmount < 9 ) {
+            if (playerAmount > 0 && playerAmount < 9 && wantCustomNames.equals("y")) {
+                //If want custom names and add for loop
+                System.out.println("Please input the player names and press enter after each name");
+                for (int i = 0; i < playerAmount; i++) {
+                    String playerName = scanner.nextLine().trim();
+                    System.out.println("Player " + i + " name: " + playerName + "\n" + "Please input the next player name");
+                    new Player(playerName);
+                }
+                players = Player.getPlayers();
+                players.forEach(System.out::println);
+                startNewTurn();
+                isHandlerActive = false;
+            } else if (playerAmount > 0 && playerAmount < 9 && wantCustomNames.equals("n")) {
                 for (int i = 0; i < playerAmount; i++) {
                     new Player(String.format("%d", i + 1));
                 }
@@ -116,9 +128,12 @@ public class Snap extends CardGame {
                 players.forEach(System.out::println);
                 startNewTurn();
                 isHandlerActive = false;
-            } else {
-                System.out.println("Invalid choice, please input a correct option");
-//                    displayPlayerSelect()
+            } else if (playerAmount <= 0 || playerAmount >= 9 && (wantCustomNames != "n" || wantCustomNames != "y")) {
+
+            } else if (playerAmount <= 0 || playerAmount >= 9) {
+                System.out.println("Invalid choice, please input a correct player amount");
+            } else if (wantCustomNames != "n" || wantCustomNames != "y") {
+                System.out.println("Invalid choice, please input y/n ");
             }
         }
     }
@@ -171,7 +186,7 @@ public class Snap extends CardGame {
                     }
 
                     if (previousCard != null) {
-                    System.out.println("\n" + "Previous card: " + previousCard);
+                        System.out.println("\n" + "Previous card: " + previousCard);
                     }
                     System.out.println("Your card: " + currentCard + "\n");
                     break;
@@ -229,7 +244,6 @@ public class Snap extends CardGame {
      * Starts a 2 second timer limit for a player to snap.
      */
     private void startSnapTimer() {
-        System.out.println("Enabling snap for 2 seconds");
         canCallSnap = true;
         timer = new Timer();
         timer.schedule(new TimerTask() {
