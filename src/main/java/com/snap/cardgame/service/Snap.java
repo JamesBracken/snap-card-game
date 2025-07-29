@@ -19,6 +19,7 @@ public class Snap extends CardGame {
     private int prevPlayerIndex = -1;
     private Player winner = null;
     private boolean isPlayerCardDealt = false;
+    private boolean wasSnapAvailable = false;
 
     private int activePlayerIndex;
     private Card previousCard;
@@ -167,10 +168,11 @@ public class Snap extends CardGame {
                     }
 
                     if (previousCard != null &&
-                            currentCard.getSymbolInt() == previousCard.getSymbolInt()) {
+                            currentCard.getSymbolInt() == previousCard.getSymbolInt() && !wasSnapAvailable) {
                         startSnapTimer();
                     }
 
+                    System.out.println("Previous card: " + previousCard + "\n");
                     System.out.println("Your card: " + currentCard + "\n");
                     break;
 
@@ -229,12 +231,14 @@ public class Snap extends CardGame {
     private void startSnapTimer() {
         System.out.println("Enabling snap for 2 seconds");
         canCallSnap = true;
-
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 canCallSnap = false;
+                // wasSnapAvailable is used to fix a bug where re-calling the deal card option re-enables a snap
+                // even w/o dealing a card
+                wasSnapAvailable = true;
                 timer.cancel();
             }
         }, 2000);
@@ -244,6 +248,10 @@ public class Snap extends CardGame {
      * Ends the current player's turn and prepares for the next.
      */
     private void endPlayerTurn() {
+
+        if (wasSnapAvailable) {
+            wasSnapAvailable = false;
+        }
         previousCard = currentCard;
         isPlayerCardDealt = false;
         prevPlayerIndex = activePlayerIndex;
