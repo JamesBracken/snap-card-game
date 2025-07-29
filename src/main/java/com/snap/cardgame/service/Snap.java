@@ -3,6 +3,7 @@ package com.snap.cardgame.service;
 import com.snap.cardgame.model.Card;
 import com.snap.cardgame.model.Player;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 /**
@@ -14,6 +15,8 @@ public class Snap extends CardGame {
 
     // Fields----------
     private final Scanner scanner = new Scanner(System.in);
+    private final int MIN_PLAYERS = 1;
+    private final int MAX_PLAYERS = 8;
 
     private List<Player> players = new ArrayList<>();
     private int prevPlayerIndex = -1;
@@ -34,7 +37,8 @@ public class Snap extends CardGame {
      */
     public void startGame() {
         resetDeck();
-        sortDeckInNumberOrder();
+//        sortDeckInNumberOrder();
+        shuffleDeck();
         displayUserStartOptions();
         handleUserStartOptions();
     }
@@ -91,7 +95,7 @@ public class Snap extends CardGame {
      * Prompts the user to choose the number of players.
      */
     private void displayPlayerSelect() {
-        System.out.println("Please select how many players will be in the game up to a maximum of 8");
+        System.out.println("Please input how many players will be in the game up to a maximum of 8");
     }
 
     /**
@@ -108,7 +112,7 @@ public class Snap extends CardGame {
             displayPlayerSelect();
             int playerAmount = Integer.parseInt(scanner.nextLine().trim());
             System.out.println("Player amount: " + playerAmount);
-            if (playerAmount > 0 && playerAmount < 9 && wantCustomNames.equals("y")) {
+            if (playerAmount >= MIN_PLAYERS && playerAmount <= MAX_PLAYERS && wantCustomNames.equals("y")) {
                 createPlayerWithCustomNames(playerAmount);
                 players = Player.getPlayers();
                 System.out.println("Players for this game " + "\n");
@@ -124,13 +128,15 @@ public class Snap extends CardGame {
                 players.forEach(System.out::println);
                 startNewTurn();
                 isHandlerActive = false;
-            } else if ((playerAmount <= 0 || playerAmount >= 9) && (!wantCustomNames.equals("n") && !wantCustomNames.equals("y"))) {
+            } else if ((playerAmount < MIN_PLAYERS || playerAmount > MAX_PLAYERS) && (!wantCustomNames.equals("n") && !wantCustomNames.equals("y"))) {
                 System.out.println("Invalid choices, please input a player amount inbetween 1-8 " + "\n"
                         + "and type in y/n for name customisation");
-            } else if (playerAmount <= 0 || playerAmount >= 9) {
+            } else if (playerAmount < MIN_PLAYERS || playerAmount > MAX_PLAYERS) {
                 System.out.println("Invalid choice, please input a correct player amount");
             } else if (!wantCustomNames.equals("n") && !wantCustomNames.equals("y")) {
                 System.out.println("Invalid choice, please input y/n ");
+            } else {
+                System.out.println("Please input valid choices");
             }
         }
     }
