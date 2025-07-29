@@ -102,27 +102,20 @@ public class Snap extends CardGame {
         boolean isHandlerActive = true;
 
         while (isHandlerActive) {
-            String choice = scanner.nextLine().trim();
 
-            switch (choice) {
-                case "1":
-                    new Player("Player 1");
-                    players = Player.getPlayers();
-                    System.out.println(players.getFirst());
-                    isHandlerActive = false;
-                    startNewTurn();
-                    break;
-                case "2":
-                    new Player("Player 1");
-                    new Player("Player 2");
-                    players = Player.getPlayers();
-                    players.forEach(System.out::println);
-                    isHandlerActive = false;
-                    startNewTurn();
-                    break;
-                default:
-                    System.out.println("Invalid choice, please input a correct option");
-                    displayPlayerSelect();
+
+            int playerAmount = Integer.parseInt(scanner.nextLine().trim());
+            if(playerAmount > 0 && playerAmount < 9 ) {
+                for (int i = 0; i < playerAmount; i++) {
+                    new Player(String.format("%d", i));
+                }
+                players = Player.getPlayers();
+                players.forEach(System.out::println);
+                startNewTurn();
+                isHandlerActive = false;
+            } else {
+                System.out.println("Invalid choice, please input a correct option");
+//                    displayPlayerSelect()
             }
         }
     }
@@ -151,6 +144,8 @@ public class Snap extends CardGame {
     private void handleInGameOptions() {
         boolean finishTurn = false;
         while (!finishTurn) {
+            System.out.println("---------------------");
+            System.out.println("Current player turn: " + players.get(activePlayerIndex));
             displayInGameOptions();
             String choice = scanner.nextLine().trim();
             switch (choice) {
@@ -172,7 +167,7 @@ public class Snap extends CardGame {
                         startSnapTimer();
                     }
 
-                    System.out.println("Previous card: " + previousCard + "\n");
+                    System.out.println("\n" + "Previous card: " + previousCard);
                     System.out.println("Your card: " + currentCard + "\n");
                     break;
 
