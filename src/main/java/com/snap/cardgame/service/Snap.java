@@ -104,19 +104,14 @@ public class Snap extends CardGame {
 
             System.out.println("Would you like to make custom names for each player? Input y/n.");
             String wantCustomNames = scanner.nextLine().trim().toLowerCase();
-            System.out.println("wantCustomNames: " + wantCustomNames);
+            System.out.println("Wants custom names: " + wantCustomNames);
             displayPlayerSelect();
             int playerAmount = Integer.parseInt(scanner.nextLine().trim());
-            //Nest this if in another if based on if we want custom names
+            System.out.println("Player amount: " + playerAmount);
             if (playerAmount > 0 && playerAmount < 9 && wantCustomNames.equals("y")) {
-                //If want custom names and add for loop
-                System.out.println("Please input the player names and press enter after each name");
-                for (int i = 0; i < playerAmount; i++) {
-                    String playerName = scanner.nextLine().trim();
-                    System.out.println("Player " + i + " name: " + playerName + "\n" + "Please input the next player name");
-                    new Player(playerName);
-                }
+                createPlayerWithCustomNames(playerAmount);
                 players = Player.getPlayers();
+                System.out.println("Players for this game " + "\n");
                 players.forEach(System.out::println);
                 startNewTurn();
                 isHandlerActive = false;
@@ -125,18 +120,37 @@ public class Snap extends CardGame {
                     new Player(String.format("%d", i + 1));
                 }
                 players = Player.getPlayers();
+                System.out.println("Players for this game " + "\n");
                 players.forEach(System.out::println);
                 startNewTurn();
                 isHandlerActive = false;
-            } else if (playerAmount <= 0 || playerAmount >= 9 && (wantCustomNames != "n" || wantCustomNames != "y")) {
-
+            } else if ((playerAmount <= 0 || playerAmount >= 9) && (!wantCustomNames.equals("n") && !wantCustomNames.equals("y"))) {
+                System.out.println("Invalid choices, please input a player amount inbetween 1-8 " + "\n"
+                        + "and type in y/n for name customisation");
             } else if (playerAmount <= 0 || playerAmount >= 9) {
                 System.out.println("Invalid choice, please input a correct player amount");
-            } else if (wantCustomNames != "n" || wantCustomNames != "y") {
+            } else if (!wantCustomNames.equals("n") && !wantCustomNames.equals("y")) {
                 System.out.println("Invalid choice, please input y/n ");
             }
         }
     }
+
+    /** Creates players with customised names
+     *
+     * @param playerAmount How many players a user wants to play with
+     */
+    private void createPlayerWithCustomNames(int playerAmount) {
+        System.out.println("Please input the player names and press enter after each name");
+        for (int i = 0; i < playerAmount; i++) {
+            if(!(i == 0)) {
+            System.out.println("Please input the next player name");
+            }
+            String playerName = scanner.nextLine().trim();
+            System.out.println("Player " + (i + 1) + " name: " + playerName + "\n");
+            new Player(playerName);
+        }
+    }
+
 
     /**
      * Starts a new player's turn, alternating between players.
