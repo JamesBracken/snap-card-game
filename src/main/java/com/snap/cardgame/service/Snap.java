@@ -15,12 +15,10 @@ public class Snap extends CardGame {
 
     // Fields----------
     private final Scanner scanner = new Scanner(System.in);
-    private final int MIN_PLAYERS = 1;
-    private final int MAX_PLAYERS = 8;
 
     private List<Player> players = new ArrayList<>();
     private int prevPlayerIndex = -1;
-    private Player winner = null;
+    private Player winner = null; // The winner variable is stated as never used, however it is used in a conditional
     private boolean isPlayerCardDealt = false;
     private boolean wasSnapAvailable = false;
 
@@ -37,7 +35,6 @@ public class Snap extends CardGame {
      */
     public void startGame() {
         resetDeck();
-//        sortDeckInNumberOrder();
         shuffleDeck();
         displayUserStartOptions();
         handleUserStartOptions();
@@ -102,6 +99,8 @@ public class Snap extends CardGame {
      * Handles player count selection and creates player instances.
      */
     private void handlePlayerSelect() {
+        final int MIN_PLAYERS = 1;
+        final int MAX_PLAYERS = 8;
         boolean isHandlerActive = true;
 
         while (isHandlerActive) {
