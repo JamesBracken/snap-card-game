@@ -92,7 +92,7 @@ public class Snap extends CardGame {
      * Prompts the user to choose the number of players.
      */
     private void displayPlayerSelect() {
-        System.out.println("Please select how many players will be in the game up to a maximum of 2");
+        System.out.println("Please select how many players will be in the game up to a maximum of 8");
     }
 
     /**
@@ -104,10 +104,13 @@ public class Snap extends CardGame {
         while (isHandlerActive) {
 
 
+//            String wantCustomNames = scanner.nextLine().trim().toLowerCase();
+//            System.out.println(wantCustomNames);
             int playerAmount = Integer.parseInt(scanner.nextLine().trim());
+            //Nest this if in another if based on if we want custom names
             if(playerAmount > 0 && playerAmount < 9 ) {
                 for (int i = 0; i < playerAmount; i++) {
-                    new Player(String.format("%d", i));
+                    new Player(String.format("%d", i + 1));
                 }
                 players = Player.getPlayers();
                 players.forEach(System.out::println);
@@ -151,7 +154,7 @@ public class Snap extends CardGame {
             switch (choice) {
                 case "1":
                     if (getDeckOfCards().isEmpty()) {
-                        handleFinishGame();
+                        handleFinishRound();
                         return;
                     }
 
@@ -167,7 +170,9 @@ public class Snap extends CardGame {
                         startSnapTimer();
                     }
 
+                    if (previousCard != null) {
                     System.out.println("\n" + "Previous card: " + previousCard);
+                    }
                     System.out.println("Your card: " + currentCard + "\n");
                     break;
 
@@ -176,7 +181,7 @@ public class Snap extends CardGame {
                     if (snapResult) {
                         finishTurn = true;
                         winner = players.get(activePlayerIndex);
-                        handleFinishGame();
+                        handleFinishRound();
                     }
                     break;
 
@@ -256,12 +261,47 @@ public class Snap extends CardGame {
     /**
      * Displays the game result and ends the game.
      */
-    private void handleFinishGame() {
+    private void handleFinishRound() {
+        // Make this handle either finishing games or starting a new game with the previously input players
+        boolean isHandlerActive = true;
+
         if (winner != null) {
             System.out.println("Oh Snap! " + players.get(activePlayerIndex) + " won!");
         } else {
             System.out.println("Oh Snap! No snaps were made in this game :(");
         }
+        while (isHandlerActive) {
+            System.out.println("Would you like to play again? y/n");
+            String choice = scanner.nextLine().trim().toLowerCase(); // If player wants to play again
+            if (choice.equals("y")) {
+                // Restart game
+                handleRestartGame();
+            } else if (choice.equals("n")) {
+                // End game
+                isHandlerActive = false;
+                handleEndGame();
+            } else {
+                System.out.println("Incorrect input, please try again");
+            }
+
+        }
+    }
+
+    private void handleRestartGame() {
+        //Resetting game back to clean state and starting a new turn
+        resetDeck();
+        sortDeckInNumberOrder();
+        prevPlayerIndex = -1;
+        Player winner = null;
+        isPlayerCardDealt = false;
+        wasSnapAvailable = false;
+        previousCard = null;
+        currentCard = null;
+        canCallSnap = false;
+        startNewTurn();
+    }
+
+    private void handleEndGame() {
         System.out.println("Finishing game.");
     }
 }
