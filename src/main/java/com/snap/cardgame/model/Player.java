@@ -45,7 +45,7 @@ public class Player {
      *
      * @return the player's name
      */
-    public String getName() {
+    public String getName() { //Not currently used, leaving for future iterations
         return name;
     }
 
@@ -54,8 +54,7 @@ public class Player {
      *
      * @param name new name
      */
-    // This method is currently unused however I am leaving this for future iterations
-    public void setName(String name) {
+    public void setName(String name) { // Not currently used, leaving for future iterations
         this.name = name;
     }
 

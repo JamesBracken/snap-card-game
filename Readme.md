@@ -44,6 +44,16 @@ The game was made in stages 1-4 each stage answering different need.
 To ensure I was able to deliver the project in scope I went from stage 1-4 progressively and focused on delivering an MVP.
 After I was able to achieve my MVP I added further features such as increasing the player limit from 2 up to 8, player name customisation and game continuation after each round.
 
+**Potential future improvements**
+
+In future iterations of the project, the below improvements can be made.
+
+- Player score tracking
+- Develop a front-end to make the game playable outside a terminal
+- Deployment of the game to make it widely accessible via browser
+- Expansion of the cardGame class into more card games
+
+
 <!-- TOC --><a name="surface"></a>
 ### Surface
 
@@ -142,7 +152,7 @@ Further assistance can be found [HERE](https://docs.github.com/en/pull-requests/
 4. Google, Stack overflow, w3Schools etc. - Used to aid development with code examples and explanations
 5. GitHub - Provides version control, can host code repositories and website deployment
 
-<!-- TOC --><a name="code-and-resources-used"></a>
+<!-- TOC --><a name="co****de-and-resources-used"></a>
 ### Code and resources used
 
 No code was copied directly copied in the development of this project. Resources were used and examples served as an aid for development, these have been listed in technologies.

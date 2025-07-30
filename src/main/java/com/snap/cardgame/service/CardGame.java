@@ -25,7 +25,7 @@ public class CardGame {
     /**
      * Resets a deck to the full 52 cards deck with all suits and symbols.
      *
-     * Clears any existing cards.
+     * Clears any pre-existing cards.
      */
     protected void resetDeck() {
         deckOfCards = new ArrayList<>();
@@ -40,7 +40,7 @@ public class CardGame {
     /**
      * Prints all cards currently in the deck to the console.
      */
-    protected void displayDeck() {
+    protected void displayDeck() { // Not currently used, leaving for future iteration
         for (Card card : deckOfCards) {
             System.out.println(card);
         }
@@ -73,7 +73,7 @@ public class CardGame {
      * All 2s come first, the deck ends with Aces having a value of 14.
      */
     protected void sortDeckInNumberOrder() {
-        deckOfCards.sort((a, b) -> a.getSymbolInt() - b.getSymbolInt());
+        deckOfCards.sort((a, b) -> a.getSymbolValue() - b.getSymbolValue());
     }
 
     /**
@@ -103,10 +103,10 @@ public class CardGame {
     /**
      * Generates a random integer between 0 and the specified range param.
      *
-     * @param range the upper bound (exclusive) for the random number
+     * @param range the upper bound (exclusive) for the random number // in current use case max 52
      * @return a random integer from 0 to range
      */
-    private int randIntGen(int range) {
-        return (int) Math.ceil(Math.random() * range);
+    private byte randIntGen(int range) {
+        return (byte) Math.ceil(Math.random() * range);
     }
 }

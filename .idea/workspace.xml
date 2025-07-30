@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f81d4de-b284-4321-8dc7-e0202c36a8ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/model/Suit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/model/Symbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/model/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/model/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/service/CardGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/service/CardGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/model/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/model/Symbol.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/service/Snap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/snap/cardgame/service/Snap.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +102,7 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/snap/cardgame/service/Snap.java</url>
-          <line>227</line>
+          <line>238</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

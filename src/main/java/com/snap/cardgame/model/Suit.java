@@ -3,7 +3,6 @@ package com.snap.cardgame.model;
 /**
  * Enum for the four card suits.
  */
-
 public enum Suit {
     SPADE('\u2660'), CLUB('\u2663'), HEART('\u2665'), DIAMOND('\u2666');
 

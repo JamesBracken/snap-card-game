@@ -13,9 +13,9 @@ public class Card {
 
     // Fields-----------
 
-    private String symbolStr;
-    private char suit;
-    private int symbolInt;
+    private final String symbolStr;
+    private final char suit;
+    private final byte symbolValue;
 
     // Constructor--------------
 
@@ -26,7 +26,7 @@ public class Card {
      * @param symbol the card symbol -TWO, THREE, FOUR +
      */
     public Card(Suit suit, Symbol symbol) {
-        this.symbolInt = symbol.getValue();
+        this.symbolValue = symbol.getValue();
         this.symbolStr = symbol.name();
         this.suit = suit.getValue();
     }
@@ -43,8 +43,8 @@ public class Card {
     /**
      * @return the cards int value
      */
-    public int getSymbolInt() {
-        return symbolInt;
+    public byte getSymbolValue() {
+        return symbolValue;
     }
 
     // Overrides---------------
