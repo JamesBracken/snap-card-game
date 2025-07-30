@@ -16,12 +16,12 @@ public class Snap extends CardGame {
     private final Scanner scanner = new Scanner(System.in);
 
     private List<Player> players = new ArrayList<>();
-    private int prevPlayerIndex = -1;
+    private byte prevPlayerIndex = -1;
     private Player winner = null; // The winner variable is stated as never used, however it is used in a conditional
     private boolean isPlayerCardDealt = false;
     private boolean wasSnapAvailable = false;
 
-    private int activePlayerIndex;
+    private byte activePlayerIndex;
     private Card previousCard;
     private Card currentCard;
     private Timer timer;
@@ -112,7 +112,7 @@ public class Snap extends CardGame {
             System.out.println("Wants custom names: " + wantCustomNames);
             displayPlayerSelect();
             int playerAmount = 0;
-            while (playerAmount == 0) {
+            while (playerAmount == 0) { // Incase of alphabetical input by user
                 try {
                     playerAmount = Integer.parseInt(scanner.nextLine().trim());
                 } catch (Exception e) {
@@ -171,7 +171,7 @@ public class Snap extends CardGame {
      * Starts a new player's turn, alternating between players.
      */
     private void startNewTurn() {
-        activePlayerIndex = (prevPlayerIndex + 1) % players.size();
+        activePlayerIndex = (byte) ((prevPlayerIndex + 1) % players.size());
         handleInGameOptions();
     }
 
@@ -212,7 +212,7 @@ public class Snap extends CardGame {
                     }
 
                     if (previousCard != null &&
-                            currentCard.getSymbolInt() == previousCard.getSymbolInt() && !wasSnapAvailable) {
+                            currentCard.getSymbolValue() == previousCard.getSymbolValue() && !wasSnapAvailable) {
                         startSnapTimer();
                     }
 
@@ -260,10 +260,10 @@ public class Snap extends CardGame {
             System.out.println("You must deal a card first");
         } else if (previousCard == null) {
             System.out.println("Only one card has been dealt so far");
-        } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && canCallSnap) {
+        } else if (currentCard.getSymbolValue() == previousCard.getSymbolValue() && canCallSnap) {
             winner = players.get(activePlayerIndex);
             return true;
-        } else if (currentCard.getSymbolInt() == previousCard.getSymbolInt() && !canCallSnap) {
+        } else if (currentCard.getSymbolValue() == previousCard.getSymbolValue() && !canCallSnap) {
             System.out.println("Snap was too slow. You had 2 seconds to react.");
         } else {
             System.out.println("Cards do not match");
@@ -337,7 +337,7 @@ public class Snap extends CardGame {
         resetDeck();
         shuffleDeck();
         prevPlayerIndex = -1;
-        Player winner = null; // Not used, leaving for future iterations
+        Player winner = null;
         isPlayerCardDealt = false;
         wasSnapAvailable = false;
         previousCard = null;
