@@ -35,7 +35,8 @@ public class Snap extends CardGame {
      */
     public void startGame() {
         resetDeck();
-        shuffleDeck();
+//        shuffleDeck();
+        sortDeckInNumberOrder();
         displayUserStartOptions();
         handleUserStartOptions();
     }
@@ -109,7 +110,14 @@ public class Snap extends CardGame {
             String wantCustomNames = scanner.nextLine().trim().toLowerCase();
             System.out.println("Wants custom names: " + wantCustomNames);
             displayPlayerSelect();
-            int playerAmount = Integer.parseInt(scanner.nextLine().trim());
+            int playerAmount = 0;
+            while (playerAmount == 0) {
+                try {
+                    playerAmount = Integer.parseInt(scanner.nextLine().trim());
+                } catch (Exception e) {
+                    System.out.println("You must input an amount of 1-8.");
+                }
+            }
             System.out.println("Player amount: " + playerAmount);
             if (playerAmount >= MIN_PLAYERS && playerAmount <= MAX_PLAYERS && wantCustomNames.equals("y")) {
                 createPlayerWithCustomNames(playerAmount);
@@ -141,15 +149,16 @@ public class Snap extends CardGame {
         }
     }
 
-    /** Creates players with customised names
+    /**
+     * Creates players with customised names
      *
      * @param playerAmount How many players a user wants to play with
      */
     private void createPlayerWithCustomNames(int playerAmount) {
         System.out.println("Please input the player names and press enter after each name");
         for (int i = 0; i < playerAmount; i++) {
-            if(!(i == 0)) {
-            System.out.println("Please input the next player name");
+            if (!(i == 0)) {
+                System.out.println("Please input the next player name");
             }
             String playerName = scanner.nextLine().trim();
             System.out.println("Player " + (i + 1) + " name: " + playerName + "\n");
