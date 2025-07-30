@@ -25,7 +25,7 @@ public class CardGame {
     /**
      * Resets a deck to the full 52 cards deck with all suits and symbols.
      *
-     * Clears any existing cards.
+     * Clears any pre-existing cards.
      */
     protected void resetDeck() {
         deckOfCards = new ArrayList<>();
@@ -40,7 +40,7 @@ public class CardGame {
     /**
      * Prints all cards currently in the deck to the console.
      */
-    protected void displayDeck() {
+    protected void displayDeck() { // Not currently used, leaving for future iteration
         for (Card card : deckOfCards) {
             System.out.println(card);
         }

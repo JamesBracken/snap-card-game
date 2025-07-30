@@ -13,9 +13,9 @@ public class Card {
 
     // Fields-----------
 
-    private String symbolStr;
-    private char suit;
-    private int symbolInt;
+    private final String symbolStr;
+    private final char suit;
+    private final int symbolInt;
 
     // Constructor--------------
 
